@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"module": "ESNext",
+		"moduleResolution": "node",
+		"target": "ESNext",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"sourceMap": true,
+		"baseUrl": "./",
+		"paths": {
+			"@/*": ["src/*"],
+			"@client/*": ["src/client/*"],
+			"@employee/*": ["src/employee/*"],
+			"@product/*": ["src/product/*"],
+			"@sale/*": ["src/sale/*"]
+		},
+		"strictPropertyInitialization": false
+	},
+	"include": ["src/**/*.ts", "src/**/*.mts"]
+}
