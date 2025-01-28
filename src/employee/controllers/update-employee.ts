@@ -8,7 +8,17 @@ import type { IEmployee } from "../@types/employee";
 export class UpdateEmployee {
 	async handle(request: FastifyRequest, reply: FastifyReply) {
 		const { id } = request.params as { id: number };
-		const { name, position, salary } = request.body as IEmployee;
+		const {
+			name,
+			cpf,
+			email,
+			birth_date,
+			date_of_admission,
+			position,
+			salary,
+			status,
+			contract,
+		} = request.body as IEmployee;
 
 		if (id === undefined) {
 			reply.code(400).send({ error: "Employee ID is required" });
@@ -18,8 +28,14 @@ export class UpdateEmployee {
 		const employee: TUpdateEmployeeParams = {
 			id,
 			name,
+			cpf,
+			email,
+			birth_date: new Date(birth_date),
+			date_of_admission: new Date(date_of_admission),
 			position,
 			salary,
+			status,
+			contract,
 		};
 
 		const newEmployee = await updateEmployee(employee);
