@@ -11,19 +11,19 @@ import { Sale } from "@/sale/models/sale";
 import { Address } from "@/models/Address";
 
 export enum Gender {
-	MALE = "male",
-	FEMALE = "female",
+	MALE = "Masculino",
+	FEMALE = "Feminino",
 }
 
 export enum ClientStatus {
-	ACTIVE = "active",
-	INACTIVE = "inactive",
-	BLOCKED = "blocked",
+	ACTIVE = "Ativo",
+	INACTIVE = "Inativo",
+	BLOCKED = "Bloqueado",
 }
 
 export enum ClientType {
-	NATURAL_PERSON = "PF",
-	LEGAL_PERSON = "PJ",
+	NATURAL_PERSON = "Pessoa fisica",
+	LEGAL_PERSON = "Pessoa juridica",
 }
 
 @Entity("client")

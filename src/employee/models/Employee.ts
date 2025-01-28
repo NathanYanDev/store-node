@@ -11,15 +11,15 @@ import { Sale } from "@/sale/models/sale";
 import { Address } from "@/models/Address";
 
 export enum EmployeeStatus {
-	ACTIVE = "ativo",
-	AWAY = "afastado",
-	DISMISSED = "desligado",
+	ACTIVE = "Ativo",
+	AWAY = "Afastado",
+	DISMISSED = "Desligado",
 }
 
 export enum ContractType {
-	CLT = "clt",
-	PJ = "pj",
-	Intern = "estágio",
+	CLT = "CLT",
+	PJ = "Pessoa juridica",
+	Intern = "Estágio",
 }
 
 @Entity("employee")

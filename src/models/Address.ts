@@ -1,9 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
 export enum AddressType {
-	HOME = "residencial",
-	BUSINESS = "comercial",
-	OTHERS = "outros",
+	HOME = "Residencial",
+	BUSINESS = "Comercial",
+	OTHERS = "Outros",
 }
 
 @Entity("address")
