@@ -24,6 +24,9 @@ export class Product {
 	@Column("int")
 	stock: number;
 
+	@Column({ type: "varchar", length: 255, nullable: false })
+	image_path: string;
+
 	@ManyToMany(
 		() => Sale,
 		(sale) => sale.products,

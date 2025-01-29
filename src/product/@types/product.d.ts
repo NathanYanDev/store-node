@@ -6,6 +6,7 @@ export interface IProduct {
 	description: string;
 	price: number;
 	stock: number;
+	image_path: string;
 	sales: Sale[];
 }
 

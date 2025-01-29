@@ -1,4 +1,4 @@
-# Projeto de Vendas
+# Fastbuy - API Rest
 
 Este é um sistema simples de vendas que realiza operações de cadastro de Clientes, Funcionários, Produtos e Vendas. O objetivo deste projeto é gerenciar informações de clientes, realizar registros de vendas e permitir a gestão de funcionários e seus respectivos dados.
 
