@@ -2,7 +2,7 @@ import { database } from "@/database/config";
 import { Client } from "../models/Client";
 import type { IClient } from "../@types/client";
 
-type GetClientReturn = IClient | string;
+type GetClientReturn = { message: string; client?: IClient };
 
 export async function getClient(id: number): Promise<GetClientReturn> {
 	const client = await database
@@ -12,8 +12,8 @@ export async function getClient(id: number): Promise<GetClientReturn> {
 		.getOne();
 
 	if (client) {
-		return client;
+		return { message: "Usuário encontrado", client };
 	}
 
-	return "User not found on database";
+	return { message: "Usuário não encontrado no banco de dados" };
 }

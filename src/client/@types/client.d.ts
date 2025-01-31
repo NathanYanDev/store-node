@@ -6,6 +6,7 @@ export interface IClientWithoutID {
 	name: string;
 	cpf: string;
 	email: string;
+	password: string;
 	phone: string;
 	birth_date: Date;
 	gender: Gender;

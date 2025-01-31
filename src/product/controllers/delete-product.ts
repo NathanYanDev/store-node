@@ -7,8 +7,8 @@ export class DeleteProduct {
 		const message = await deleteProduct(id);
 
 		if (message === "Product deleted successfully") {
-			reply.code(200).send({ message });
+			return reply.code(200).send({ message });
 		}
-		reply.code(404).send({ message });
+		return reply.code(404).send({ message });
 	}
 }

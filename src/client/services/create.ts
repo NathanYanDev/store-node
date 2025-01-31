@@ -19,7 +19,7 @@ export async function createClient(client: IClientWithoutID) {
 			.values(client)
 			.execute();
 
-		return "Client created successfully";
+		return "Usuário criado com sucesso";
 	} catch (error) {
 		if (error instanceof Error) throw new Error(error.message);
 	}

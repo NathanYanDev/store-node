@@ -6,9 +6,11 @@ export class GetProducts {
 		const products = await getProducts();
 
 		if (products.length > 0) {
-			reply.code(200).send({ products });
+			return reply.code(200).send({ products });
 		}
 
-		reply.code(404).send({ message: "Não existem produtos cadastrados" });
+		return reply
+			.code(404)
+			.send({ message: "Não existem produtos cadastrados" });
 	}
 }

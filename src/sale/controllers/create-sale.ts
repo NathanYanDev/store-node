@@ -5,7 +5,7 @@ import type { IProductSale } from "@/product/@types/product";
 import type { IEmployee } from "@/employee/@types/employee";
 
 import { createSale } from "../services/create-sale";
-import { getClient } from "@/client/services/get-client";
+import { getClient } from "@/client/services/get-by-id";
 import { getEmployee } from "@/employee/services/get-employee";
 import { getProduct } from "@/product/services/get-product";
 import { updateProductStockQuantity } from "@/product/services/update-product-stock-quantity";
@@ -48,7 +48,7 @@ export class CreateSale {
 		);
 
 		if (message === "Sale registered successfully")
-			reply.code(200).send({ message });
-		reply.code(200).send({ message: "An error occurred" });
+			return reply.code(200).send({ message });
+		return reply.code(200).send({ message: "An error occurred" });
 	}
 }

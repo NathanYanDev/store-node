@@ -21,8 +21,7 @@ export class UpdateEmployee {
 		} = request.body as IEmployee;
 
 		if (id === undefined) {
-			reply.code(400).send({ error: "Employee ID is required" });
-			return;
+			return reply.code(400).send({ error: "Employee ID is required" });
 		}
 
 		const employee: TUpdateEmployeeParams = {
@@ -40,6 +39,6 @@ export class UpdateEmployee {
 
 		const newEmployee = await updateEmployee(employee);
 
-		reply.code(200).send({ newEmployee });
+		return reply.code(200).send({ newEmployee });
 	}
 }

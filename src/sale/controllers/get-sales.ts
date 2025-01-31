@@ -5,9 +5,9 @@ export class GetSales {
 	async handle(request: FastifyRequest, reply: FastifyReply) {
 		const sales = await getSales();
 
-		if (sales.length > 0) reply.code(200).send({ sales });
+		if (sales.length > 0) return reply.code(200).send({ sales });
 
-		reply.code(404).send({
+		return reply.code(404).send({
 			message: "Não existe venda cadastrada em nosso banco de dados",
 		});
 	}

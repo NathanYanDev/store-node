@@ -36,6 +36,9 @@ export class Employee {
 	@Column({ type: "varchar", length: 255, unique: true })
 	email: string;
 
+	@Column({ type: "varchar", length: 255, nullable: false })
+	password: string;
+
 	@Column({ type: "date", nullable: true, default: null })
 	birth_date: Date;
 

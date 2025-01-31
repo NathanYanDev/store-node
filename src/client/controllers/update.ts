@@ -1,9 +1,7 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
-import {
-	type TUpdateClientParams,
-	updateClient,
-} from "../services/update-client";
+import { type TUpdateClientParams, updateClient } from "../services/update";
 import type { IClientWithoutID } from "../@types/client";
+import { hash } from "@/lib/bcrypt";
 
 export class UpdateClient {
 	async handle(request: FastifyRequest, reply: FastifyReply) {
@@ -12,6 +10,7 @@ export class UpdateClient {
 			name,
 			cpf,
 			email,
+			password,
 			phone,
 			birth_date,
 			gender,
@@ -20,9 +19,18 @@ export class UpdateClient {
 			address,
 		} = request.body as IClientWithoutID;
 
+		const newHashPass = await hash(password);
+
+		if (!newHashPass) {
+			return reply
+				.code(404)
+				.send({ error: "Senha inválida, tente novamente" });
+		}
+
 		if (id === undefined) {
-			reply.code(400).send({ error: "Client ID is required" });
-			return;
+			return reply
+				.code(400)
+				.send({ error: "O ID do cliente é obrigatório" });
 		}
 
 		const client: TUpdateClientParams = {
@@ -30,6 +38,7 @@ export class UpdateClient {
 			name,
 			cpf,
 			email,
+			password: newHashPass as string,
 			phone,
 			birth_date,
 			gender,
@@ -40,6 +49,13 @@ export class UpdateClient {
 
 		const newClient = await updateClient(client);
 
-		reply.code(200).send({ newClient });
+		if (newClient) {
+			reply
+				.code(200)
+				.send({ message: "Informações atualizadas com sucesso" });
+		}
+		return reply
+			.code(404)
+			.send({ error: "Houve um erro, tente novamente" });
 	}
 }

@@ -8,9 +8,9 @@ export class GetEmployee {
 		const employee = await getEmployee(id);
 
 		if (employee === "User not found on database") {
-			reply.code(404).send({ employee });
+			return reply.code(404).send({ employee });
 		}
 
-		reply.code(200).send(employee);
+		return reply.code(200).send(employee);
 	}
 }

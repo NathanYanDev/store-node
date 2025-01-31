@@ -8,9 +8,9 @@ export class GetProductsByPriceRange {
 		const products = await getProductsByPriceRange(min, max);
 
 		if (products === "Don't exist products in this range") {
-			reply.code(404).send({ products });
+			return reply.code(404).send({ products });
 		}
 
-		reply.code(200).send(products);
+		return reply.code(200).send(products);
 	}
 }

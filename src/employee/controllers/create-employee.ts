@@ -32,6 +32,6 @@ export class CreateEmployee {
 
 		const message = await createEmployee(employee);
 
-		reply.code(201).send({ message });
+		return reply.code(201).send({ message });
 	}
 }

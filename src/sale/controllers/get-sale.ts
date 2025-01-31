@@ -7,7 +7,7 @@ export class GetSale {
 
 		const sale = await getSale(id);
 
-		if (sale) reply.code(200).send(sale);
-		reply.code(404).send({ message: "Sale not found on database" });
+		if (sale) return reply.code(200).send(sale);
+		return reply.code(404).send({ message: "Sale not found on database" });
 	}
 }

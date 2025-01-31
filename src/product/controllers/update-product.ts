@@ -19,6 +19,6 @@ export class UpdateProduct {
 
 		const newProduct = await updateProduct(product);
 
-		reply.code(200).send({ newProduct });
+		return reply.code(200).send({ newProduct });
 	}
 }

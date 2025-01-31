@@ -9,9 +9,9 @@ export class UpdateProductStockQuantity {
 		const message = await updateProductStockQuantity(id, qty);
 
 		if (message === "Updated stock") {
-			reply.code(200).send({ message });
+			return reply.code(200).send({ message });
 		}
 
-		reply.code(404).send({ message: "An error occurred" });
+		return reply.code(404).send({ message: "An error occurred" });
 	}
 }

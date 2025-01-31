@@ -8,6 +8,7 @@ export type TUpdateClientParams = {
 	name: string;
 	cpf: string;
 	email: string;
+	password: string;
 	phone: string;
 	birth_date: Date;
 	gender: Gender;
@@ -27,6 +28,7 @@ export async function updateClient(client: TUpdateClientParams) {
 				name: client.name,
 				cpf: client.cpf,
 				email: client.email,
+				password: client.password,
 				phone: client.phone,
 				birth_date: client.birth_date,
 				gender: client.gender,

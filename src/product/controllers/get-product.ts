@@ -8,9 +8,9 @@ export class GetProduct {
 		const product = await getProduct(id);
 
 		if (product === "Product not found on database") {
-			reply.code(404).send({ product });
+			return reply.code(404).send({ product });
 		}
 
-		reply.code(200).send(product);
+		return reply.code(200).send(product);
 	}
 }

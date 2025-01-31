@@ -7,8 +7,8 @@ export class DeleteEmployee {
 		const message = await deleteEmployee(id);
 
 		if (message === "Employee deleted successfully")
-			reply.code(200).send({ message });
+			return reply.code(200).send({ message });
 
-		reply.code(404).send({ message });
+		return reply.code(404).send({ message });
 	}
 }

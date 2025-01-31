@@ -52,7 +52,9 @@ export class CreateProduct {
 						newProduct.image_path = imageURL;
 					} catch (err) {
 						console.log(err);
-						reply.code(404).send({ error: "Insert a valid image" });
+						return reply
+							.code(404)
+							.send({ error: "Insert a valid image" });
 					}
 				}
 			}
@@ -60,12 +62,12 @@ export class CreateProduct {
 			const message = await createProduct(newProduct);
 
 			if (message === "Product created successfully") {
-				reply.code(201).send({ message });
+				return reply.code(201).send({ message });
 			}
-			reply.code(404).send({ message });
+			return reply.code(404).send({ message });
 		} catch (error) {
 			console.error(error);
-			reply.code(500).send({ error: "Error processing form" });
+			return reply.code(500).send({ error: "Error processing form" });
 		}
 	}
 }

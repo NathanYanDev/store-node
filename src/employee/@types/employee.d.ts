@@ -6,6 +6,7 @@ export interface IEmployeeWithoutID {
 	name: string;
 	cpf: string;
 	email: string;
+	password: string;
 	birth_date: Date;
 	date_of_admission: Date;
 	position: string;

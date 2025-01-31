@@ -8,9 +8,9 @@ export class GetEmployeesByName {
 		const employees = await getEmployeesByName(name);
 
 		if (employees === "Name not found on database") {
-			reply.code(404).send({ employees });
+			return reply.code(404).send({ employees });
 		}
 
-		reply.code(200).send(employees);
+		return reply.code(200).send(employees);
 	}
 }

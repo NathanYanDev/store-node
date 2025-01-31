@@ -5,6 +5,6 @@ export class GetEmployees {
 	async handle(request: FastifyRequest, reply: FastifyReply) {
 		const employees = await getEmployees();
 
-		reply.code(200).send(employees);
+		return reply.code(200).send(employees);
 	}
 }

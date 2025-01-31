@@ -34,11 +34,14 @@ export class Client {
 	@Column({ type: "varchar", length: 255 })
 	name: string;
 
-	@Column({ type: "varchar", length: 14, unique: true, nullable: false })
+	@Column({ type: "char", length: 12, unique: true, nullable: false })
 	cpf: string;
 
 	@Column({ type: "varchar", length: 255, unique: true })
 	email: string;
+
+	@Column({ type: "varchar", length: 255, nullable: false })
+	password: string;
 
 	@Column({ type: "varchar", length: 15 })
 	phone: string;
