@@ -8,6 +8,7 @@ export async function getClient(id: number): Promise<GetClientReturn> {
 	const client = await database
 		.getRepository(Client)
 		.createQueryBuilder("client")
+		.leftJoinAndSelect("client.address", "address")
 		.where(`client.id = ${id}`)
 		.getOne();
 

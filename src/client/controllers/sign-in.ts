@@ -6,10 +6,32 @@ export const SignInClient: RouteOptions = {
 	method: "POST",
 	url: "/signin",
 	schema: {
+		body: {
+			type: "object",
+			properties: {
+				email: { type: "string", format: "email" },
+				password: { type: "string", minLength: 3 },
+			},
+		},
 		response: {
-			200: {},
-			401: {},
-			500: {},
+			200: {
+				type: "object",
+				properties: {
+					acessToken: { type: "string" },
+				},
+			},
+			401: {
+				type: "object",
+				properties: {
+					error: { type: "string" },
+				},
+			},
+			500: {
+				type: "object",
+				properties: {
+					error: { type: "string" },
+				},
+			},
 		},
 	},
 	handler: async (request, reply) => {

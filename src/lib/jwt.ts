@@ -12,7 +12,12 @@ export type Payload = {
 };
 
 export async function sign(payload: Payload) {
-	return jwt.sign(payload, secret_key);
+	try {
+		return jwt.sign(payload, secret_key);
+	} catch (err) {
+		console.log(err);
+		return false;
+	}
 }
 
 export async function verify(token: string) {

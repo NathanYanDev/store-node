@@ -1,7 +1,7 @@
 import type { RouteOptions } from "fastify";
 import { getClients } from "../services/get-all";
+import { isAuthenticated } from "@/shared/isAuthenticated";
 
-// TODO: TERMINAR ESSA E AS DEMAIS ROTAS
 export const GetClients: RouteOptions = {
 	method: "GET",
 	url: "/",
@@ -30,6 +30,34 @@ export const GetClients: RouteOptions = {
 							type: "string",
 							enum: ["Pessoa fisica", "Pessoa juridica"],
 						},
+						address: {
+							type: "object",
+							properties: {
+								type: {
+									type: "string",
+									enum: [
+										"Residencial",
+										"Comercial",
+										"Outros",
+									],
+								},
+								street: { type: "string" },
+								number: { type: "string" },
+								neighborhood: { type: "string" },
+								city: { type: "string" },
+								state: {
+									type: "string",
+									minLength: 2,
+									maxLength: 3,
+								},
+								zip_code: {
+									type: "string",
+									minLength: 8,
+									maxLength: 8,
+								},
+								country: { type: "string" },
+							},
+						},
 					},
 					required: [
 						"id",
@@ -41,17 +69,19 @@ export const GetClients: RouteOptions = {
 						"gender",
 						"status",
 						"type",
+						"address",
 					],
 				},
 			},
 			404: {
 				type: "object",
 				properties: {
-					message: { type: "string" },
+					error: { type: "string" },
 				},
 			},
 		},
 	},
+	preHandler: isAuthenticated,
 	handler: async (_, reply) => {
 		const clients = await getClients();
 
@@ -61,6 +91,6 @@ export const GetClients: RouteOptions = {
 
 		return reply
 			.code(404)
-			.send({ message: "Não existem clientes cadastrados" });
+			.send({ error: "Não existem clientes cadastrados" });
 	},
 };

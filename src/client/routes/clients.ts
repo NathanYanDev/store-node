@@ -14,6 +14,6 @@ export async function ClientRoutes(fastify: FastifyInstance) {
 		.route(GetClientsByName)
 		.route(SignUpClient)
 		.route(SignInClient)
-		.put("/update/:id", new UpdateClient().handle)
+		.route(UpdateClient)
 		.delete("/delete/:id", new DeleteClient().handle);
 }

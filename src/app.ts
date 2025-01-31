@@ -6,6 +6,7 @@ import { SalesRoutes } from "./sale/routes/sales";
 
 import multipart from "@fastify/multipart";
 import AWS from "aws-sdk";
+import { swaggerLoadder } from "./lib/swagger";
 
 const FILE_SIZE = 10 * 1024 * 1024;
 
@@ -21,12 +22,18 @@ export class Application {
 	}
 
 	private routes() {
-		this.app
-			.register(multipart, { limits: { fileSize: FILE_SIZE } })
-			.register(ClientRoutes, { prefix: "/clients" })
-			.register(EmployeeRoutes, { prefix: "/employees" })
-			.register(ProductRoutes, { prefix: "/products" })
-			.register(SalesRoutes, { prefix: "/sales" });
+		this.swagger().then(() => {
+			this.app
+				.register(multipart, { limits: { fileSize: FILE_SIZE } })
+				.register(ClientRoutes, { prefix: "/clients" })
+				.register(EmployeeRoutes, { prefix: "/employees" })
+				.register(ProductRoutes, { prefix: "/products" })
+				.register(SalesRoutes, { prefix: "/sales" });
+		});
+	}
+
+	private async swagger() {
+		await swaggerLoadder().load(this.app);
 	}
 
 	public listen() {

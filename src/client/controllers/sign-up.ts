@@ -58,7 +58,7 @@ export const SignUpClient: RouteOptions = {
 			404: {
 				type: "object",
 				properties: {
-					errorMessage: { type: "string" },
+					error: { type: "string" },
 				},
 			},
 		},
@@ -82,7 +82,7 @@ export const SignUpClient: RouteOptions = {
 		if (!hashPass) {
 			return reply
 				.code(404)
-				.send({ errorMessage: "Senha inválida, tente novamente" });
+				.send({ error: "Senha inválida, tente novamente" });
 		}
 
 		const userCreatedMessage = await verifyEmailAndCpf(email, cpf);
@@ -112,6 +112,6 @@ export const SignUpClient: RouteOptions = {
 			return reply.code(201).send({ message });
 		}
 
-		return reply.code(404).send({ errorMessage: message });
+		return reply.code(404).send({ error: message });
 	},
 };

@@ -10,6 +10,7 @@ export async function getClientsByName(
 	const clients = await database
 		.getRepository(Client)
 		.createQueryBuilder("client")
+		.leftJoinAndSelect("client.address", "address")
 		.where("LOWER(client.name) LIKE :name", {
 			name: `%${name.toLocaleLowerCase()}%`,
 		})
