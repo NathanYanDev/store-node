@@ -2,7 +2,7 @@ import type { RouteOptions } from "fastify";
 import { createClient } from "../services/create";
 import type { IClientWithoutID } from "../@types/client";
 import { hash } from "@/lib/bcrypt";
-import { verifyEmailAndCpf } from "../services/verify-email-and-cpf";
+import { verifyEmailAndCpf } from "../../shared/verify-email-and-cpf";
 
 export const SignUpClient: RouteOptions = {
 	method: "POST",
@@ -85,10 +85,14 @@ export const SignUpClient: RouteOptions = {
 				.send({ error: "Senha inválida, tente novamente" });
 		}
 
-		const userCreatedMessage = await verifyEmailAndCpf(email, cpf);
+		const userCreatedMessage = await verifyEmailAndCpf(
+			email,
+			cpf,
+			"client",
+		);
 
 		if (userCreatedMessage !== "Usuário pode ser criado") {
-			return reply.code(404).send({ userCreatedMessage });
+			return reply.code(404).send({ error: userCreatedMessage });
 		}
 
 		const client: IClientWithoutID = {
@@ -100,6 +104,7 @@ export const SignUpClient: RouteOptions = {
 			birth_date: new Date(birth_date),
 			gender,
 			createdAt: new Date(),
+			updatedAt: new Date(),
 			status,
 			type,
 			address,

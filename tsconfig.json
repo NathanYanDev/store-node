@@ -13,7 +13,7 @@
 		"paths": {
 			"@/*": ["src/*"],
 			"@client/*": ["src/client/*"],
-			"@employee/*": ["src/employee/*"],
+			"@seller/*": ["src/seller/*"],
 			"@product/*": ["src/product/*"],
 			"@sale/*": ["src/sale/*"]
 		},

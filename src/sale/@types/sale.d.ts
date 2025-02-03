@@ -1,10 +1,10 @@
-import type { Employee } from "@/employee/models/Employee";
+import type { Seller } from "@/seller/models/Seller";
 import type { Client } from "@/client/models/Client";
 
 export interface ISale {
 	id: number;
 	date_of_sale: Date;
 	total_amount: number;
-	employee_id: Employee;
+	seller_id: Seller;
 	client_id: Client;
 }

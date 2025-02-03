@@ -8,7 +8,7 @@ export async function getSale(id: number) {
 		relations: {
 			products: true,
 			client: true,
-			employee: true,
+			seller: true,
 		},
 	});
 

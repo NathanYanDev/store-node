@@ -9,12 +9,8 @@ export async function isAuthenticated(
 	const tokenParts = rawToken?.split("Bearer ");
 	const acessToken = tokenParts?.[1];
 
-	console.log(acessToken);
-
 	if (acessToken) {
 		const payload = await verify(acessToken);
-
-		console.log({ payload });
 
 		if (payload) {
 			return payload;

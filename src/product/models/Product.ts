@@ -4,8 +4,10 @@ import {
 	PrimaryGeneratedColumn,
 	ManyToMany,
 	type Relation,
+	OneToMany,
 } from "typeorm";
 import { Sale } from "@/sale/models/sale";
+import { Rating } from "@/models/Rating";
 
 @Entity("product")
 export class Product {
@@ -32,4 +34,10 @@ export class Product {
 		(sale) => sale.products,
 	)
 	sales: Relation<Sale[]>;
+
+	@OneToMany(
+		() => Rating,
+		(rating) => rating.product,
+	)
+	ratings: Rating[];
 }

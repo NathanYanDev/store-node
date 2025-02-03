@@ -1,11 +1,8 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
-import {
-	type TUpdateEmployeeParams,
-	updateEmployee,
-} from "../services/update-employee";
-import type { IEmployee } from "../@types/employee";
+import { type TUpdateSellerParams, updateSeller } from "../services/update";
+import type { ISeller } from "../@types/seller";
 
-export class UpdateEmployee {
+export class UpdateSeller {
 	async handle(request: FastifyRequest, reply: FastifyReply) {
 		const { id } = request.params as { id: number };
 		const {
@@ -18,13 +15,13 @@ export class UpdateEmployee {
 			salary,
 			status,
 			contract,
-		} = request.body as IEmployee;
+		} = request.body as ISeller;
 
 		if (id === undefined) {
-			return reply.code(400).send({ error: "Employee ID is required" });
+			return reply.code(400).send({ error: "Seller ID is required" });
 		}
 
-		const employee: TUpdateEmployeeParams = {
+		const seller: TUpdateSellerParams = {
 			id,
 			name,
 			cpf,
@@ -37,8 +34,8 @@ export class UpdateEmployee {
 			contract,
 		};
 
-		const newEmployee = await updateEmployee(employee);
+		const newSeller = await updateSeller(seller);
 
-		return reply.code(200).send({ newEmployee });
+		return reply.code(200).send({ newSeller });
 	}
 }

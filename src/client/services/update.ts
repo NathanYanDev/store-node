@@ -12,6 +12,7 @@ export type TUpdateClientParams = {
 	password: string;
 	phone: string;
 	birth_date: Date;
+	updatedAt: Date;
 	gender: Gender;
 	status: ClientStatus;
 	type: ClientType;
@@ -36,6 +37,7 @@ export async function updateClient(client: TUpdateClientParams) {
 				password: client.password,
 				phone: client.phone,
 				birth_date: client.birth_date,
+				updatedAt: client.updatedAt,
 				gender: client.gender,
 				status: client.status,
 				type: client.type,

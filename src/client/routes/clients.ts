@@ -7,13 +7,18 @@ import { DeleteClient } from "../controllers/delete";
 import { GetClientsByName } from "../controllers/get-by-name";
 import { SignInClient } from "../controllers/sign-in";
 
+const routes = [
+	GetClients,
+	GetClient,
+	GetClientsByName,
+	SignUpClient,
+	SignInClient,
+	UpdateClient,
+	DeleteClient,
+];
+
 export async function ClientRoutes(fastify: FastifyInstance) {
-	fastify
-		.route(GetClients)
-		.route(GetClient)
-		.route(GetClientsByName)
-		.route(SignUpClient)
-		.route(SignInClient)
-		.route(UpdateClient)
-		.delete("/delete/:id", new DeleteClient().handle);
+	routes.map((route) => {
+		fastify.route(route);
+	});
 }

@@ -1,6 +1,6 @@
 import { fastify, type FastifyInstance } from "fastify";
 import { ClientRoutes } from "./client/routes/clients";
-import { EmployeeRoutes } from "./employee/routes/employees";
+import { SellerRoutes } from "./seller/routes/sellers";
 import { ProductRoutes } from "./product/routes/products";
 import { SalesRoutes } from "./sale/routes/sales";
 
@@ -26,7 +26,7 @@ export class Application {
 			this.app
 				.register(multipart, { limits: { fileSize: FILE_SIZE } })
 				.register(ClientRoutes, { prefix: "/clients" })
-				.register(EmployeeRoutes, { prefix: "/employees" })
+				.register(SellerRoutes, { prefix: "/sellers" })
 				.register(ProductRoutes, { prefix: "/products" })
 				.register(SalesRoutes, { prefix: "/sales" });
 		});

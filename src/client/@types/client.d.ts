@@ -11,6 +11,7 @@ export interface IClientWithoutID {
 	birth_date: Date;
 	gender: Gender;
 	createdAt: Date;
+	updatedAt?: Date;
 	status: ClientStatus;
 	type: ClientType;
 	address: Address;

@@ -114,6 +114,7 @@ export const UpdateClient: RouteOptions = {
 			password: newHashPass as string,
 			phone,
 			birth_date,
+			updatedAt: new Date(),
 			gender,
 			status,
 			type,

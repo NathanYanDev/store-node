@@ -6,7 +6,7 @@ export async function getSales(): Promise<Sale[]> {
 	const sales = await saleRepository.find({
 		relations: {
 			products: true,
-			employee: true,
+			seller: true,
 			client: true,
 		},
 	});

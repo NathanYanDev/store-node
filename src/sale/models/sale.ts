@@ -6,9 +6,10 @@ import {
 	ManyToMany,
 	JoinTable,
 	JoinColumn,
+	OneToMany,
 } from "typeorm";
 import { Client } from "@/client/models/Client";
-import { Employee } from "@/employee/models/Employee";
+import { Seller } from "@/seller/models/Seller";
 import { Product } from "@/product/models/Product";
 
 @Entity("sale")
@@ -23,8 +24,8 @@ export class Sale {
 	total_amount: number;
 
 	@ManyToOne(
-		() => Employee,
-		(client) => client.sales,
+		() => Seller,
+		(seller) => seller.sales,
 		{
 			onDelete: "CASCADE",
 			onUpdate: "CASCADE",
@@ -32,11 +33,11 @@ export class Sale {
 		},
 	)
 	@JoinColumn({
-		name: "employee_id",
-		foreignKeyConstraintName: "employee_id_fk",
+		name: "seller_id",
+		foreignKeyConstraintName: "seller_id_fk",
 		referencedColumnName: "id",
 	})
-	employee: Employee;
+	seller: Seller;
 
 	@ManyToOne(
 		() => Client,

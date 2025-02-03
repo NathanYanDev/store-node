@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { Sale } from "@/sale/models/sale";
 import { Address } from "@/models/Address";
+import { Rating } from "@/models/Rating";
 
 export enum Gender {
 	MALE = "Masculino",
@@ -55,6 +56,9 @@ export class Client {
 	@Column({ type: "date" })
 	createdAt: Date;
 
+	@Column({ type: "date" })
+	updatedAt: Date;
+
 	@Column({ type: "enum", enum: ClientStatus, default: ClientStatus.ACTIVE })
 	status: ClientStatus;
 
@@ -74,4 +78,10 @@ export class Client {
 		(sale) => sale.client,
 	)
 	sales: Relation<Sale[]>;
+
+	@OneToMany(
+		() => Rating,
+		(rating) => rating.client,
+	)
+	ratings: Rating[];
 }

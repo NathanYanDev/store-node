@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const secret_key = process.env.JWT_SECRET as string;
+const ONE_DAY = 86400;
 
 export type Payload = {
 	id: number;
@@ -13,7 +14,7 @@ export type Payload = {
 
 export async function sign(payload: Payload) {
 	try {
-		return jwt.sign(payload, secret_key);
+		return jwt.sign(payload, secret_key, { expiresIn: ONE_DAY });
 	} catch (err) {
 		console.log(err);
 		return false;

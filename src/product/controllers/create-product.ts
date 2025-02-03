@@ -4,7 +4,6 @@ import type { IProduct } from "../@types/product";
 import { Application } from "@/app";
 export class CreateProduct {
 	async handle(request: FastifyRequest, reply: FastifyReply) {
-		// TODO: MULTIPART REQUEST
 		const s3 = new Application().s3;
 		const newProduct: IProduct = {
 			name: "",

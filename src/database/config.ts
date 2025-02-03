@@ -2,10 +2,11 @@ import "reflect-metadata";
 import dotenv from "dotenv";
 import { DataSource } from "typeorm";
 import { Client } from "@/client/models/Client";
-import { Employee } from "@/employee/models/Employee";
+import { Seller } from "@/seller/models/Seller";
 import { Product } from "@/product/models/Product";
 import { Sale } from "@/sale/models/sale";
 import { Address } from "@/models/Address";
+import { Rating } from "@/models/Rating";
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ export const database = new DataSource({
 	username: process.env.DATABASE_USERNAME,
 	password: process.env.DATABASE_PASSWORD,
 	database: process.env.DATABASE,
-	entities: [Client, Employee, Product, Sale, Address],
+	entities: [Client, Seller, Product, Sale, Address, Rating],
 	synchronize: true,
 	logging: false,
 });
