@@ -2,11 +2,14 @@ import type { ISeller } from "../@types/seller";
 import { database } from "@/database/config";
 import { Seller } from "../models/Seller";
 
-type TGetSellerByName = ISeller[] | string;
+type GetSellerByNameReturn = {
+	message: string;
+	sellers?: ISeller[];
+};
 
 export async function getSellersByName(
 	name: string,
-): Promise<TGetSellerByName> {
+): Promise<GetSellerByNameReturn> {
 	const sellers = await database
 		.getRepository(Seller)
 		.createQueryBuilder("seller")
@@ -16,8 +19,11 @@ export async function getSellersByName(
 		.getMany();
 
 	if (sellers.length > 0) {
-		return sellers;
+		return {
+			message: "Nome do vendedor encontrado no banco de dados",
+			sellers,
+		};
 	}
 
-	return "Seller name not found on database";
+	return { message: "Nome do vendedor não encontrado no banco de dados" };
 }

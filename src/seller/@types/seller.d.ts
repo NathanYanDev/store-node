@@ -16,7 +16,7 @@ export interface ISellerWithoutID {
 	status: SellerStatus;
 	avg_rating: number;
 	count_ratings: number;
-	delivery_time: string;
+	delivery_time: number;
 	delivery_type: DeliveryType;
 	ratings: Rating[];
 	sales: Sale[];

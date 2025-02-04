@@ -7,13 +7,18 @@ import { DeleteSeller } from "../controllers/delete";
 import { GetSellersByName } from "../controllers/get-by-name";
 import { SignInSeller } from "../controllers/sign-in";
 
+const routes = [
+	GetSellers,
+	GetSeller,
+	GetSellersByName,
+	SignUpSeller,
+	SignInSeller,
+	UpdateSeller,
+	DeleteSeller,
+];
+
 export async function SellerRoutes(fastify: FastifyInstance) {
-	fastify
-		.route(GetSellers)
-		.route(SignUpSeller)
-		.route(SignInSeller)
-		.get("/:id", new GetSeller().handle)
-		.get("/search", new GetSellersByName().handle)
-		.put("/update/:id", new UpdateSeller().handle)
-		.delete("/delete/:id", new DeleteSeller().handle);
+	routes.map((route) => {
+		fastify.route(route);
+	});
 }

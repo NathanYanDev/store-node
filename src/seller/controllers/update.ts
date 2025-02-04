@@ -1,41 +1,94 @@
-import type { FastifyRequest, FastifyReply } from "fastify";
+import type { RouteOptions } from "fastify";
 import { type TUpdateSellerParams, updateSeller } from "../services/update";
 import type { ISeller } from "../@types/seller";
+import { isAuthenticated } from "@/shared/isAuthenticated";
+import { sellerInfoCU } from "../schemas/seller";
+import { hash } from "@/lib/bcrypt";
 
-export class UpdateSeller {
-	async handle(request: FastifyRequest, reply: FastifyReply) {
+export const UpdateSeller: RouteOptions = {
+	method: "PUT",
+	url: "/update/:id",
+	schema: {
+		params: {
+			type: "object",
+			properties: {
+				id: { type: "integer" },
+			},
+		},
+		body: {
+			type: "object",
+			properties: sellerInfoCU,
+		},
+		response: {
+			200: {
+				type: "object",
+				properties: {
+					message: { type: "string" },
+				},
+			},
+			400: {
+				type: "object",
+				properties: {
+					error: { type: "string" },
+				},
+			},
+			404: {
+				type: "object",
+				properties: {
+					error: { type: "string" },
+				},
+			},
+		},
+	},
+	preHandler: isAuthenticated,
+	handler: async (request, reply) => {
 		const { id } = request.params as { id: number };
 		const {
 			name,
-			cpf,
 			email,
-			birth_date,
-			date_of_admission,
-			position,
-			salary,
-			status,
-			contract,
+			password,
+			phone,
+			cpf_cnpj,
+			address,
+			type,
+			delivery_time,
+			delivery_type,
 		} = request.body as ISeller;
 
 		if (id === undefined) {
 			return reply.code(400).send({ error: "Seller ID is required" });
 		}
 
+		const newHashPass = await hash(password);
+
+		if (!newHashPass) {
+			return reply
+				.code(404)
+				.send({ error: "Senha inválida, tente novamente" });
+		}
+
 		const seller: TUpdateSellerParams = {
 			id,
 			name,
-			cpf,
 			email,
-			birth_date: new Date(birth_date),
-			date_of_admission: new Date(date_of_admission),
-			position,
-			salary,
-			status,
-			contract,
+			password: newHashPass as string,
+			phone,
+			cpf_cnpj,
+			address,
+			type,
+			delivery_time,
+			delivery_type,
 		};
 
-		const newSeller = await updateSeller(seller);
+		const updateResult = await updateSeller(seller);
 
-		return reply.code(200).send({ newSeller });
-	}
-}
+		if (updateResult) {
+			reply
+				.code(200)
+				.send({ message: "Informações atualizadas com sucesso" });
+		}
+		return reply
+			.code(404)
+			.send({ error: "Houve um erro, tente novamente" });
+	},
+};

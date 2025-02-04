@@ -11,10 +11,10 @@ export async function deleteSeller(id: number) {
 			.execute();
 
 		if (result.affected === 0) {
-			return "Seller ID not found";
+			return "ID do vendedor não encontrado";
 		}
 
-		return "Seller deleted successfully";
+		return "Informações do vendedor deletadas com sucesso";
 	} catch (error) {
 		if (error instanceof Error) throw new Error(error.message);
 	}

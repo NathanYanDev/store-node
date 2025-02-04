@@ -1,7 +1,7 @@
 import type { RouteOptions } from "fastify";
 import { signUp } from "../services/sign-up";
 import type { ISellerWithoutID } from "../@types/seller";
-import { sellerInfoCreate } from "../schemas/seller";
+import { sellerInfoCU } from "../schemas/seller";
 import { SellerStatus } from "../models/Seller";
 import { sign } from "@/lib/jwt";
 import { verifyEmailAndCpf } from "@/shared/verify-email-and-cpf";
@@ -13,7 +13,7 @@ export const SignUpSeller: RouteOptions = {
 	schema: {
 		body: {
 			type: "object",
-			properties: sellerInfoCreate,
+			properties: sellerInfoCU,
 		},
 		response: {
 			201: {

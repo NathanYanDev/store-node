@@ -1,23 +1,28 @@
 import { database } from "@/database/config";
 import { Seller } from "../models/Seller";
-import type { ContractType, SellerStatus } from "../models/Seller";
-import type { Address } from "@/models/Address";
+import type { DeliveryType, SellerType } from "../models/Seller";
+import { Address } from "@/models/Address";
+import { getSeller } from "./get-by-id";
 
 export type TUpdateSellerParams = {
 	id: number;
 	name: string;
-	cpf: string;
 	email: string;
-	birth_date: Date;
-	date_of_admission: Date;
-	position: string;
-	salary: number;
-	status: SellerStatus;
-	contract: ContractType;
+	password: string;
+	phone: string;
+	cpf_cnpj: string;
+	address: Address;
+	type: SellerType;
+	delivery_time: number;
+	delivery_type: DeliveryType;
 };
 
 export async function updateSeller(seller: TUpdateSellerParams) {
 	const userID = seller.id;
+	const address = seller.address;
+
+	const { seller: sellerInfo } = await getSeller(userID);
+	const addressID = sellerInfo?.address.id;
 
 	try {
 		const newSeller = await database
@@ -25,19 +30,30 @@ export async function updateSeller(seller: TUpdateSellerParams) {
 			.update(Seller)
 			.set({
 				name: seller.name,
-				cpf: seller.cpf,
-				email: seller.email,
-				birth_date: seller.birth_date,
-				date_of_admission: seller.date_of_admission,
-				position: seller.position,
-				salary: seller.salary,
-				status: seller.status,
-				contract: seller.contract,
 			})
 			.where(`id = ${userID}`)
 			.execute();
 
-		return newSeller;
+		const newAddress = await database
+			.createQueryBuilder()
+			.update(Address)
+			.set({
+				type: address.type,
+				street: address.street,
+				number: address.number,
+				neighborhood: address.neighborhood,
+				city: address.city,
+				state: address.state,
+				zip_code: address.zip_code,
+				country: address.country,
+			})
+			.where(`id = ${addressID}`)
+			.execute();
+
+		if (newSeller && newAddress) {
+			return true;
+		}
+		return false;
 	} catch (error) {
 		if (error instanceof Error) throw new Error(error.message);
 	}

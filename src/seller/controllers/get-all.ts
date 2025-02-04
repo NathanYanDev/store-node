@@ -1,7 +1,7 @@
 import type { RouteOptions } from "fastify";
 import { getSellers } from "../services/get-all";
 import { isAuthenticated } from "@/shared/isAuthenticated";
-import { sellerInfo } from "../schemas/seller";
+import { sellerInfoR } from "../schemas/seller";
 
 export const GetSellers: RouteOptions = {
 	method: "GET",
@@ -9,14 +9,16 @@ export const GetSellers: RouteOptions = {
 	schema: {
 		response: {
 			200: {
-				sellerInfo,
+				type: "array",
+				items: {
+					sellerInfoR,
+				},
 			},
 			204: {
 				type: "null",
 			},
 		},
 	},
-	preHandler: isAuthenticated,
 	handler: async (_, reply) => {
 		const sellers = await getSellers();
 

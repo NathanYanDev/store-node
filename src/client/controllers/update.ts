@@ -3,6 +3,7 @@ import { type TUpdateClientParams, updateClient } from "../services/update";
 import type { IClientWithoutID } from "../@types/client";
 import { hash } from "@/lib/bcrypt";
 import { isAuthenticated } from "@/shared/isAuthenticated";
+import { clientInfoCU } from "../schemas/client";
 
 export const UpdateClient: RouteOptions = {
 	method: "PUT",
@@ -17,43 +18,7 @@ export const UpdateClient: RouteOptions = {
 		},
 		body: {
 			type: "object",
-			properties: {
-				name: { type: "string" },
-				cpf: { type: "string", pattern: "^\\d{11}$" },
-				email: { type: "string", format: "email" },
-				password: { type: "string", minLength: 3 },
-				phone: { type: "string", minLength: 10, maxLength: 11 },
-				birth_date: { type: "string", format: "date" },
-				gender: { type: "string", enum: ["Masculino", "Feminino"] },
-				status: {
-					type: "string",
-					enum: ["Ativo", "Inativo", "Bloqueado"],
-				},
-				type: {
-					type: "string",
-					enum: ["Pessoa fisica", "Pessoa juridica"],
-				},
-				address: {
-					type: "object",
-					properties: {
-						type: {
-							type: "string",
-							enum: ["Residencial", "Comercial", "Outros"],
-						},
-						street: { type: "string" },
-						number: { type: "string" },
-						neighborhood: { type: "string" },
-						city: { type: "string" },
-						state: { type: "string", minLength: 2, maxLength: 3 },
-						zip_code: {
-							type: "string",
-							minLength: 8,
-							maxLength: 8,
-						},
-						country: { type: "string" },
-					},
-				},
-			},
+			properties: clientInfoCU,
 		},
 		response: {
 			200: {

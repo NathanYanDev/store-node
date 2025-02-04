@@ -3,6 +3,8 @@ import { createClient } from "../services/create";
 import type { IClientWithoutID } from "../@types/client";
 import { hash } from "@/lib/bcrypt";
 import { verifyEmailAndCpf } from "../../shared/verify-email-and-cpf";
+import { sign } from "@/lib/jwt";
+import { clientInfoCU } from "../schemas/client";
 
 export const SignUpClient: RouteOptions = {
 	method: "POST",
@@ -10,48 +12,13 @@ export const SignUpClient: RouteOptions = {
 	schema: {
 		body: {
 			type: "object",
-			properties: {
-				name: { type: "string" },
-				cpf: { type: "string", pattern: "^\\d{11}$" },
-				email: { type: "string", format: "email" },
-				password: { type: "string", minLength: 3 },
-				phone: { type: "string", minLength: 10, maxLength: 11 },
-				birth_date: { type: "string", format: "date" },
-				gender: { type: "string", enum: ["Masculino", "Feminino"] },
-				status: {
-					type: "string",
-					enum: ["Ativo", "Inativo", "Bloqueado"],
-				},
-				type: {
-					type: "string",
-					enum: ["Pessoa fisica", "Pessoa juridica"],
-				},
-				address: {
-					type: "object",
-					properties: {
-						type: {
-							type: "string",
-							enum: ["Residencial", "Comercial", "Outros"],
-						},
-						street: { type: "string" },
-						number: { type: "string" },
-						neighborhood: { type: "string" },
-						city: { type: "string" },
-						state: { type: "string", minLength: 2, maxLength: 3 },
-						zip_code: {
-							type: "string",
-							minLength: 8,
-							maxLength: 8,
-						},
-						country: { type: "string" },
-					},
-				},
-			},
+			properties: clientInfoCU,
 		},
 		response: {
 			201: {
 				type: "object",
 				properties: {
+					acessToken: { type: "string" },
 					message: { type: "string" },
 				},
 			},
@@ -111,10 +78,10 @@ export const SignUpClient: RouteOptions = {
 			sales: [],
 		};
 
-		const message = await createClient(client);
-
-		if (message === "Usuário criado com sucesso") {
-			return reply.code(201).send({ message });
+		const { message, createdId } = await createClient(client);
+		if (createdId) {
+			const acessToken = await sign({ id: createdId, email, cpf });
+			return reply.code(201).send({ acessToken, message });
 		}
 
 		return reply.code(404).send({ error: message });

@@ -3,7 +3,14 @@ import type { IClientWithoutID } from "../@types/client";
 import { Client } from "../models/Client";
 import { database } from "@/database/config";
 
-export async function createClient(client: IClientWithoutID) {
+type createClientReturn = {
+	message: string;
+	createdId?: number;
+};
+
+export async function createClient(
+	client: IClientWithoutID,
+): Promise<createClientReturn> {
 	try {
 		await database
 			.createQueryBuilder()
@@ -12,15 +19,19 @@ export async function createClient(client: IClientWithoutID) {
 			.values(client.address)
 			.execute();
 
-		await database
+		const clientCreated = await database
 			.createQueryBuilder()
 			.insert()
 			.into(Client)
 			.values(client)
 			.execute();
 
-		return "Usuário criado com sucesso";
+		return {
+			message: "Usuário criado com sucesso",
+			createdId: clientCreated.raw.insertId,
+		};
 	} catch (error) {
-		if (error instanceof Error) throw new Error(error.message);
+		console.log(error);
+		return { message: "Houve um problema, tente novamente" };
 	}
 }
